@@ -1,122 +1,127 @@
-# Project Status
+﻿# MolecularAI — Project Status
+
+## Project Overview
+
+MolecularAI is a machine-learning application for predicting aqueous
+molecular solubility from SMILES representations.
+
+The application uses RDKit for molecular processing and descriptor
+calculation, a trained Random Forest model for prediction, and Streamlit
+for the user interface.
 
 ## Stage 0 — Environment and Project Setup
 
-Completed:
+Status: Complete
 
-- Project directory created
-- Python virtual environment created
-- Scientific Python libraries installed
-- RDKit installed
+- Python virtual environment and scientific libraries configured
+- RDKit installed and tested
 - Git repository initialized
-- Project folder structure created
-- Documentation files created
-
----
+- Project structure and documentation created
 
 ## Stage 1 — Machine Learning Foundations
 
-### Completed
+Status: Complete
 
-#### Mathematics and Linear Regression
-- Variables and predictions
-- Model parameters
-- Bias and weights
-- Mean Squared Error (MSE)
-- Derivative and gradient
-- Gradient descent
-- Linear regression from scratch
-- Multiple data points
-- Multiple features
-- Matrix-based prediction
-- Dot products
+Topics studied:
+- Linear regression, weights, bias and gradient descent
+- Mean squared error and model optimization
+- Train, validation and test splits
+- Underfitting, overfitting and model complexity
+- Feature scaling and numerical stability
+- MAE, MSE, RMSE and R-squared
+- Comparing regression models
 
-#### Generalization
-- Train/test split
-- Training error vs test error
-- Validation dataset
-- Training / validation / test roles
-- Generalization
+## Stage 2 — Molecular Data and Feature Engineering
 
-#### Model Complexity
-- Polynomial features
-- Underfitting
-- Good fit
-- Overfitting
-- Model complexity
+Status: Complete for the current implementation
 
-#### Feature Scaling
-- Mean and standard deviation
-- Standardization
-- Why feature scaling matters
-- Gradient descent with unscaled features
-- Numerical instability
-- Gradient descent with scaled features
+- Loaded the Delaney ESOL molecular solubility dataset
+- Processed molecular SMILES using RDKit
+- Canonicalized molecular structures
+- Aggregated repeated structures by mean target value
+- Excluded invalid molecular structures
+- Calculated six molecular descriptors
+- Generated Morgan fingerprints with radius 2 and 2048 bits
+- Combined descriptors and fingerprints into 2054 model features
 
-#### Model Evaluation
-- MAE
-- MSE
-- RMSE
-- R²
-- Comparing multiple models
+## Stage 3 — Model Training and Evaluation
 
-### Important Lessons
+Status: Implemented; further independent validation remains
 
-- Training data is used to learn model parameters.
-- Validation data is used for model selection and hyperparameter tuning.
-- Test data should remain unseen until final evaluation.
-- Training performance alone does not tell us whether a model generalizes.
-- More complex models can perform worse on unseen data.
-- Feature scaling can make gradient descent much more stable.
-- MAE measures average absolute error.
-- MSE penalizes large errors more strongly.
-- RMSE expresses error in the original target units.
-- R² measures how much variation in the target is explained by the model.
+- Built Random Forest regression models
+- Evaluated models using scaffold-based data splits
+- Compared configurations and analyzed prediction errors
+- Generated evaluation tables and diagnostic plots
+- Documented data leakage safeguards and evaluation limitations
+- Trained the candidate model on 1117 cleaned unique molecular structures
 
-### Final Evaluation Example
+Candidate model configuration:
+- Algorithm: RandomForestRegressor
+- Number of trees: 200
+- Maximum depth: 12
+- Minimum samples per leaf: 2
+- Number of features: 2054
 
-Model A:
+Development evaluation results for a separately trained evaluation
+configuration:
+- MAE: 0.5920
+- RMSE: 0.7447
+- R-squared: 0.7688
 
-- MAE ≈ 0.14
-- MSE ≈ 0.022
-- RMSE ≈ 0.148
-- R² ≈ 0.997
+These results came from development scaffold splits used during model
+selection. They are not an untouched final benchmark and are not direct
+test metrics for the saved candidate model.
 
-Model B:
+The saved candidate model was refitted using all 1117 cleaned molecules.
+Its training predictions are not independent estimates of generalization.
+External validation has not yet been performed.
 
-- MAE = 1.2
-- MSE = 1.6
-- RMSE ≈ 1.265
-- R² = 0.8
+## Stage 4 — Streamlit Application
 
-Model A generalized much better on this example.
+Status: Implemented and manually tested
 
----
+Single Molecule mode:
+- Accepts a molecular SMILES string
+- Predicts log aqueous solubility
+- Displays a 2D molecular structure
+- Shows six molecular descriptors
 
-## Current Stage
+Compare Molecules mode:
+- Accepts two molecular SMILES strings
+- Predicts both molecules
+- Displays descriptor tables
+- Provides a comparison summary and visual charts
 
-Stage 1 is complete.
+Manual checks passed for:
+- Ethanol: CCO
+- Acetic acid: CC(=O)O
+- Benzene: c1ccccc1
 
-## Next Stage
+The displayed values are model estimates, not experimental measurements.
 
-### Stage 2 — First Real Molecular Dataset
+## Stage 5 — Documentation and Portfolio Preparation
 
-Planned:
+Status: In progress
 
-1. Understand molecular data
-2. Understand molecular representations
-3. Load a real molecular dataset
-4. Use RDKit to represent molecules
-5. Extract molecular descriptors
-6. Create feature matrices
-7. Define a molecular property prediction problem
-8. Split molecular data into train/validation/test sets
-9. Train a regression model
-10. Evaluate molecular predictions
-11. Visualize molecules and predictions
+Next tasks:
+1. Finalize the README and project setup instructions.
+2. Review the model card and evaluation reports.
+3. Check repository cleanliness and tracked files.
+4. Verify that large model binaries and raw datasets are not committed.
+5. Add clear screenshots of the application when available.
+6. Document limitations and future improvements.
+7. Plan independent validation on data not used for model selection.
 
-### Learning Rule
+## Important Scientific Limitations
 
-For every major ML concept:
+- Predictions depend on the dataset and molecular structures represented
+  during training.
+- Development split metrics may be optimistic after repeated model tuning.
+- Independent external validation is still required.
+- Predictions should not be treated as experimental measurements or as
+  evidence of drug safety or efficacy.
 
-**Understand → derive → implement from scratch → test → use libraries → apply to molecules.**
+## Learning Principle
+
+Understand the concept -> derive the logic -> implement -> test ->
+use established libraries -> apply to molecular data.
