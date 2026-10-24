@@ -1,0 +1,25 @@
+{
+    "project": "MolecularAI",
+    "task": "ESOL aqueous solubility prediction",
+    "model_type": "RandomForestRegressor",
+    "n_estimators": 200,
+    "max_depth": 12,
+    "min_samples_leaf": 2,
+    "random_state": 42,
+    "training_samples": 1117,
+    "feature_type": "molecular_descriptors_plus_morgan_fingerprints",
+    "descriptor_names": [
+        "molecular_weight",
+        "h_bond_donors",
+        "h_bond_acceptors",
+        "rotatable_bonds",
+        "tpsa",
+        "logp"
+    ],
+    "fingerprint_radius": 2,
+    "fingerprint_bits": 2048,
+    "total_features": 2054,
+    "target_column": "measured log solubility in mols per litre",
+    "validation_note": "Candidate refitted on all cleaned dataset molecules after exploratory repeated scaffold validation. Training performance is not an independent test result; external validation has not been performed.",
+    "training_data_cleaning": "Canonical SMILES; duplicate structures aggregated using mean measured solubility"
+}
