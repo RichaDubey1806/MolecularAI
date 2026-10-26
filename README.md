@@ -57,23 +57,19 @@ The cleaned dataset contains 1,117 unique canonical molecular structures after i
 5. **Evaluation:** Separate scripts support scaffold-based evaluation, model configuration comparisons, and error analysis.
 
 ## Repository Structure
-
-```text
 MolecularAI/
-├── app/
-│   ├── predict.py
-│   └── streamlit_app.py
-├── data/
-├── models/
-├── notebooks/
-├── reports/
-│   └── MODEL_CARD.md
-├── scripts/
-├── requirements.txt
-├── README.md
-└── PROJECT_STATUS.md
-```
-
+|-- app/
+|   |-- predict.py
+|   `-- streamlit_app.py
+|-- data/
+|-- models/
+|-- notebooks/
+|-- reports/
+|   `-- MODEL_CARD.md
+|-- scripts/
+|-- requirements.txt
+|-- README.md
+`-- PROJECT_STATUS.md
 ## Run Locally
 
 ### 1. Clone the repository
@@ -130,7 +126,7 @@ During development, a separately trained Random Forest model was evaluated using
 |---|---:|
 | MAE | 0.5920 |
 | RMSE | 0.7447 |
-| R² | 0.7688 |
+| R-squared (R2) | 0.7688 |
 
 These results describe the evaluation model and development split, not an independent benchmark of the saved candidate model. The split was used during model development and configuration selection. The saved candidate model was subsequently refitted on all 1,117 cleaned molecules. Its training performance is not an independent estimate of generalization, and external validation has not yet been performed.
 
