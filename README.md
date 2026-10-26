@@ -1,12 +1,14 @@
-﻿# MolecularAI — AI-Powered Molecular Property Prediction
+# MolecularAI - AI-Powered Molecular Property Prediction
 
-MolecularAI is a machine-learning application that predicts the aqueous solubility of small molecules from their SMILES representations. It combines cheminformatics, molecular descriptors, molecular fingerprints, and a Random Forest regression model in an interactive Streamlit interface.
+MolecularAI is a scientific machine learning project that predicts the aqueous solubility of small molecules from their SMILES representations. It combines cheminformatics, molecular descriptors, Morgan fingerprints, and Random Forest regression in an interactive Streamlit application.
 
-## Features
+The long-term vision is to extend this foundation toward molecular discovery and design, including uncertainty estimation, candidate generation, molecular optimization, and scientific machine learning.
 
-- Predict molecular solubility from SMILES input.
+## Current Features
+
+- Predict aqueous solubility from a molecule's SMILES string.
 - Compare multiple molecules side by side.
-- Visualize molecular structures using RDKit.
+- Visualize 2D molecular structures using RDKit.
 - Calculate six molecular descriptors:
   - Molecular weight
   - Hydrogen-bond donors
@@ -14,44 +16,70 @@ MolecularAI is a machine-learning application that predicts the aqueous solubili
   - Rotatable bonds
   - Topological polar surface area (TPSA)
   - LogP
-- Display molecular property comparisons and visualizations.
-- Evaluate model performance with scaffold-based data splits and error-analysis reports.
+- Display molecular property comparison tables and charts.
+- Evaluate models using scaffold-based splits and error-analysis scripts.
 
 ## Technology Stack
 
-- Python
-- Streamlit
-- RDKit
-- scikit-learn
-- NumPy and pandas
-- Matplotlib
-- Joblib
+- **Language:** Python
+- **Application:** Streamlit
+- **Cheminformatics:** RDKit
+- **Machine learning:** scikit-learn
+- **Data processing:** NumPy, pandas
+- **Visualization:** Matplotlib
+- **Model persistence:** Joblib
 
 ## Machine Learning Approach
 
-The candidate model is a Random Forest regressor trained using the ESOL aqueous-solubility dataset.
+The application uses a Random Forest regressor to estimate aqueous solubility from molecular features.
 
 The feature representation contains 2,054 features:
+
 - 6 molecular descriptors
 - 2,048 Morgan fingerprint bits, using radius 2
 
-Candidate model configuration:
-- Estimator: RandomForestRegressor
+The candidate model configuration is:
+
+- Estimator: `RandomForestRegressor`
 - Number of trees: 200
 - Maximum depth: 12
 - Minimum samples per leaf: 2
 - Random state: 42
 
-The cleaned training data contains 1,117 unique canonical molecular structures after repeated structures are aggregated and invalid SMILES are excluded.
+The cleaned dataset contains 1,117 unique canonical molecular structures after invalid SMILES are excluded and repeated structures are aggregated.
+
+## Project Architecture
+
+1. **Input:** The user enters a molecule as a SMILES string.
+2. **Molecular processing:** RDKit validates the structure and calculates molecular descriptors and Morgan fingerprints.
+3. **Prediction:** The trained Random Forest model estimates aqueous solubility.
+4. **Visualization:** Streamlit presents predictions, 2D molecular structures, descriptors, and comparison charts.
+5. **Evaluation:** Separate scripts support scaffold-based evaluation, model configuration comparisons, and error analysis.
+
+## Repository Structure
+
+```text
+MolecularAI/
+├── app/
+│   ├── predict.py
+│   └── streamlit_app.py
+├── data/
+├── models/
+├── notebooks/
+├── reports/
+│   └── MODEL_CARD.md
+├── scripts/
+├── requirements.txt
+├── README.md
+└── PROJECT_STATUS.md
+```
 
 ## Run Locally
 
 ### 1. Clone the repository
 
-Replace the placeholder with your actual GitHub repository URL.
-
 ```bash
-git clone <YOUR_GITHUB_REPOSITORY_URL>
+git clone https://github.com/RichaDubey1806/MolecularAI.git
 cd MolecularAI
 ```
 
@@ -70,18 +98,14 @@ python -m venv .venv
 python -m pip install -r requirements.txt
 ```
 
-### 4. Add the trained model files
+### 4. Provide the trained model files
 
-The model artifacts are not included in this repository by default. Place the required candidate model and configuration files in the `models/` directory:
+The trained model binaries and raw dataset are excluded from Git. To run predictions, place these candidate model files in the `models/` directory:
 
 - `solubility_rf_clean_candidate.joblib`
 - `solubility_rf_clean_candidate_config.json`
 
-These files are required to run candidate-model predictions.
-
 ### 5. Launch the application
-
-In PowerShell:
 
 ```powershell
 $env:MOLECULARAI_MODEL = "candidate"
@@ -100,7 +124,7 @@ Open the local URL printed in the terminal.
 
 ## Evaluation
 
-During development, a separately trained Random Forest model was evaluated using a cleaned scaffold-based split:
+During development, a separately trained Random Forest model was evaluated using a cleaned scaffold-based split.
 
 | Metric | Development result |
 |---|---:|
@@ -110,19 +134,29 @@ During development, a separately trained Random Forest model was evaluated using
 
 These results describe the evaluation model and development split, not an independent benchmark of the saved candidate model. The split was used during model development and configuration selection. The saved candidate model was subsequently refitted on all 1,117 cleaned molecules. Its training performance is not an independent estimate of generalization, and external validation has not yet been performed.
 
-See `reports/MODEL_CARD.md` for model details, evaluation context, limitations, and intended use.
+See `reports/MODEL_CARD.md` for further details, evaluation context, limitations, and intended use.
 
 ## Limitations
 
 - Predictions are estimates, not experimental measurements.
-- Performance may vary for molecules unlike those represented in the training dataset.
+- Performance may vary for molecules unlike those represented in the training data.
 - Development-set metrics should not be interpreted as external validation.
 - Predictions should not be used alone to make medical, clinical, or drug-development decisions.
 
-## Project Status
+## Future Work
 
-The interactive application supports single-molecule prediction and molecule comparison. Further work can include independent validation, uncertainty estimation, broader datasets, and additional molecular visualization capabilities.
+The long-term roadmap includes:
+
+- Independent external validation
+- Prediction uncertainty estimation
+- Broader molecular datasets
+- Molecular representation learning and graph neural networks
+- Candidate molecule generation and optimization
+- Interactive 3D molecular visualization
+- Scientific and physics-informed machine learning
+
+These are future directions, not claims about currently implemented features.
 
 ## License
 
-No license has been specified yet. Add a license before explicitly permitting reuse or redistribution.
+No license has been specified. Add a license before explicitly permitting reuse or redistribution.
